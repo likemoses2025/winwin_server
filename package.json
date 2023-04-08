@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "export NODE_ENV=development&& nodemon server.js",
-    "start": "export NODE_ENV=production&& node server.js"
+    "dev": "export NODE_ENV=Development&& nodemon server.js",
+    "start": "export NODE_ENV=Production&& node server.js"
   },
   "author": "",
   "license": "ISC",

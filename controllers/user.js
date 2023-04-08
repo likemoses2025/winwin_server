@@ -31,11 +31,27 @@ export const login = asyncError(async (req, res, next) => {
 });
 
 export const signup = asyncError(async (req, res, next) => {
-  const { name, email, password, address, city, country, pinCode } = req.body;
+  const {
+    team,
+    channel,
+    email,
+    password,
+    userName,
+    sapCode,
+    storeName,
+    storeAddress,
+    phoneNumber,
+  } = req.body;
 
   let user = await User.findOne({ email });
 
-  if (user) return next(new ErrorHandler("User Already Exist", 400));
+  if (user)
+    return next(
+      new ErrorHandler(
+        "이메일이 존재합니다.!! 다른 이메일을 입력해 주세요!!",
+        400
+      )
+    );
 
   let avatar = undefined;
 
@@ -46,17 +62,19 @@ export const signup = asyncError(async (req, res, next) => {
   }
 
   user = await User.create({
-    avatar,
-    name,
+    team,
+    channel,
     email,
     password,
-    address,
-    city,
-    country,
-    pinCode,
+    userName,
+    sapCode,
+    storeName,
+    storeAddress,
+    phoneNumber,
+    avatar,
   });
 
-  sendToken(user, res, `Registered Successfully`, 201);
+  sendToken(user, res, `회원가입에 성공했습니다 !!`, 201);
 });
 
 export const logOut = asyncError(async (req, res, next) => {
@@ -68,7 +86,7 @@ export const logOut = asyncError(async (req, res, next) => {
     })
     .json({
       success: true,
-      message: "Logged Out Successfully",
+      message: "로그아웃을 성공했습니다.!!",
     });
 });
 
@@ -84,20 +102,31 @@ export const getMyProfile = asyncError(async (req, res, next) => {
 export const updateProfile = asyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
 
-  const { name, email, address, country, pinCode, city } = req.body;
+  const {
+    team,
+    channel,
+    email,
+    userName,
+    sapCode,
+    storeName,
+    storeAddress,
+    phoneNumber,
+  } = req.body;
 
-  if (name) user.name = name;
+  if (team) user.team = team;
+  if (channel) user.channel = channel;
   if (email) user.email = email;
-  if (address) user.address = address;
-  if (country) user.country = country;
-  if (pinCode) user.pinCode = pinCode;
-  if (city) user.city = city;
+  if (userName) user.userName = userName;
+  if (sapCode) user.sapCode = sapCode;
+  if (storeName) user.storeName = storeName;
+  if (storeAddress) user.storeAddress = storeAddress;
+  if (phoneNumber) user.phoneNumber = phoneNumber;
 
   await user.save();
 
   res.status(200).json({
     success: true,
-    message: "Profile updated successfully",
+    message: "프로필 변경을 성공했습니다.!!",
     user,
   });
 });
@@ -109,13 +138,14 @@ export const changePassword = asyncError(async (req, res, next) => {
 
   if (!oldPassword || !newPassword) {
     return next(
-      new ErrorHandler("Please enter Old Password & new Password", 400)
+      new ErrorHandler("이전 패스워드와 새로운 패스워드를 입력해 주세요!!", 400)
     );
   }
 
   const isMatched = await user.comparePassword(oldPassword);
 
-  if (!isMatched) return next(new ErrorHandler("inCorrect Old Password", 400));
+  if (!isMatched)
+    return next(new ErrorHandler("이전 패스워드가 일치하지 않습니다.!!", 400));
 
   user.password = newPassword;
 
@@ -123,7 +153,7 @@ export const changePassword = asyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Password Updated successfully",
+    message: "패스워드 변경을 성공했습니다.!!",
   });
 });
 
@@ -144,7 +174,7 @@ export const updatePic = asyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Avatar Updated Successfully",
+    message: "프로필 이미지 변경을 성공했습니다!!",
   });
 });
 
@@ -166,10 +196,10 @@ export const forgetPassword = asyncError(async (req, res, next) => {
   user.otp_expire = new Date(Date.now() + otp_expire);
   await user.save();
 
-  const message = `Your OTP For Reseting Password is ${otp}. \n Please Ignore If you Haven't requested this.`;
+  const message = `패스워드 변경을 위한 OTP번호는 ${otp}. \n Please Ignore If you Haven't requested this.`;
 
   try {
-    await sendEmail("OTP For Reseting Password", user.email, message);
+    await sendEmail("패스워드 변경을 위한 OTP Number", user.email, message);
   } catch (error) {
     user.otp = null;
     user.otp_expire = null;
@@ -179,7 +209,7 @@ export const forgetPassword = asyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: `Email sent to ${user.email}`,
+    message: `OTP번호를 ${user.email} 로 보냈습니다.`,
   });
 });
 
@@ -193,10 +223,14 @@ export const resetPassword = asyncError(async (req, res, next) => {
 
   if (!user)
     return next(
-      new ErrorHandler("Incorrect OTP Number or has been expired", 400)
+      new ErrorHandler(
+        "OTP번호가 일치하지 않거나 유효기간이 만료되었습니다.!!",
+        400
+      )
     );
 
-  if (!password) return next(new ErrorHandler("Please Enter New Password"));
+  if (!password)
+    return next(new ErrorHandler("새로운 패스워드를 입력해 주세요!!"));
 
   user.password = password;
   user.otp = undefined;
@@ -206,6 +240,6 @@ export const resetPassword = asyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Password updated successfully, You Can Login Now !!",
+    message: "패스워드 변경을 성공했습니다. 이제 로그인이 가능합니다.!!",
   });
 });

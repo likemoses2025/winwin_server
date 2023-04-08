@@ -6,7 +6,7 @@ import { User } from "../models/user.js";
 export const isAuthenticated = asyncError(async (req, res, next) => {
   const { token } = req.cookies;
 
-  if (!token) return next(new ErrorHandler("Not Logged in", 401));
+  if (!token) return next(new ErrorHandler("먼저 로그인을 해주세요!!", 401));
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
 

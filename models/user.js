@@ -4,55 +4,88 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const schema = new mongoose.Schema({
-  name: {
+  team: {
     type: String,
-    required: [true, "Please Enter Name"],
+    enum: [
+      "경북팀",
+      "경남팀",
+      "동부팀",
+      "서부팀",
+      "강원팀",
+      "충청팀",
+      "호남팀",
+      "온라인팀",
+    ],
+    default: "경북팀",
+    required: [true, "팀명을 입력해 주세요"],
+  },
+
+  channel: {
+    type: String,
+    enum: ["특약점", "중대형마트", "유통기타", "온라인", "기타"],
+    default: "특약점",
+    required: [true, "채널명을 입력해 주세요"],
   },
 
   email: {
     type: String,
-    required: [true, "Please Enter Email"],
-    unique: [true, "Email already exists"],
+    required: [true, "이메일을 입력해 주세요!!"],
+    unique: [true, "이메일이 존재합니다. 다른 이메일을 입력해 주세요!!"],
     validate: validator.isEmail,
   },
 
   password: {
     type: String,
-    required: [true, "Please Enter Password"],
-    minLength: [6, "Password must be at least 6 characters long"],
+    required: [true, "패스워드를 입력해 주세요!!"],
+    minLength: [6, "패스워드를 6글자 이상 입력해 주세요!!"],
     // 사용자 정보를 요청할때 제외됨.
     select: false,
   },
 
-  address: {
+  userName: {
     type: String,
-    required: [true, "Please Enter Address"],
+    required: [true, "점주님의 이름을 입력해 주세요!!"],
   },
 
-  city: {
+  sapCode: {
     type: String,
-    required: [true, "Please Enter City"],
+    unique: [true, "코드가 존재합니다. SapCode를 확인해 주세요!!"],
   },
 
-  country: {
+  storeName: {
     type: String,
-    required: [true, "Please Enter Country"],
+    required: [true, "점포명을 입력해 주세요!!"],
+    unique: [true, "점포명이 존재합니다. 다른 점포명을 입력해 주세요!!"],
   },
 
-  pinCode: {
-    type: Number,
-    required: [true, "Please Enter PinCode"],
+  storeAddress: {
+    type: String,
+    required: [true, "창고 주소를 입력해주세요!!"],
+  },
+
+  phoneNumber: {
+    type: String,
+    required: [true, "휴대폰 번호를 입력해 주세요!!"],
   },
 
   role: {
     type: String,
-    enum: ["admin", "user"],
-    default: "user",
+    enum: ["admin", "dealer", "manager"],
+    default: "dealer",
   },
 
   avatar: {
     public_id: String,
     url: String,
+  },
+
+  approve: {
+    type: String,
+    required: [
+      true,
+      "관리자의 승인이 필요합니다!! 승인까지 시간이 걸릴 수 있습니다.",
+    ],
+    default: "false",
   },
 
   otp: Number,
