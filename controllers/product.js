@@ -136,3 +136,10 @@ export const deleteProduct = asyncError(async (req, res, next) => {
     message: "제품 삭제를 성공했습니다.!!",
   });
 });
+
+export const getAdminProduct = asyncError(async (req, res, next) => {
+  // Search & Category query
+  const products = await Product.find({});
+
+  res.status(200).json({ success: true, products });
+});
