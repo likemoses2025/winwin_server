@@ -243,3 +243,30 @@ export const resetPassword = asyncError(async (req, res, next) => {
     message: "패스워드 변경을 성공했습니다. 이제 로그인이 가능합니다.!!",
   });
 });
+
+export const addPlace = asyncError(async (req, res, next) => {
+  const place = req.body;
+  console.log(req.body);
+  const user = await User.findById(req.user._id);
+
+  if (!user)
+    return next(
+      ErrorHandler("유저를 찾을수 없습니다.!! 이메일을 확인하세요", 404)
+    );
+
+  user.deliveryPlace.push(place);
+  await user.save();
+
+  res.status(200).json({ success: true, message: "배송장소를 등록했습니다!!" });
+});
+
+export const deletePlace = asyncError(async (req, res, next) => {
+  const { id } = req.params;
+  console.log(id);
+
+  const user = await User.findById(req.user._id);
+  console.log(user.deliveryPlace);
+  // await user.deleteOne({ _id: id })
+
+  res.status(200).json({ success: true, user });
+});

@@ -3,27 +3,16 @@ import { Order } from "../models/order.js";
 import { Product } from "../models/product.js";
 
 export const createOrder = asyncError(async (req, res, next) => {
-  const {
-    shippingInfo,
-    orderItems,
-    paymentMethod,
-    paymentInfo,
-    itemsPrice,
-    taxPrice,
-    shippingCharges,
-    totalAmount,
-  } = req.body;
+  const { deliveryDate, deliveryPlace, orderItems, user, totalBox, totalSum } =
+    req.body;
 
   await Order.create({
     user: req.user._id,
-    shippingInfo,
+    deliveryDate,
+    deliveryPlace,
     orderItems,
-    paymentMethod,
-    paymentInfo,
-    itemsPrice,
-    taxPrice,
-    shippingCharges,
-    totalAmount,
+    totalBox,
+    totalSum,
   });
 
   //   주문시 Product.Stock 차감 로직

@@ -9,6 +9,8 @@ import {
   signup,
   updatePic,
   updateProfile,
+  addPlace,
+  deletePlace,
 } from "../controllers/user.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 import { singleUpload } from "../middlewares/multer.js";
@@ -29,6 +31,10 @@ router.get("/logout", isAuthenticated, logOut);
 router.put("/updateProfile", isAuthenticated, updateProfile);
 router.put("/changepassword", isAuthenticated, changePassword);
 router.put("/updatepic", isAuthenticated, singleUpload, updatePic);
+
+// Delivery Place
+router.put("/addPlace", isAuthenticated, addPlace);
+router.delete("/deletePlace/:id", isAuthenticated, deletePlace);
 
 // Forget Password & Reset Password
 router.route("/forgetpassword").post(forgetPassword).put(resetPassword);

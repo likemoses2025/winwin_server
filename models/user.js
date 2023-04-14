@@ -58,7 +58,12 @@ const schema = new mongoose.Schema({
     unique: [true, "점포명이 존재합니다. 다른 점포명을 입력해 주세요!!"],
   },
 
-  storeAddress: [{ type: String }],
+  deliveryPlace: [
+    {
+      name: { type: String },
+      address: { type: String },
+    },
+  ],
 
   phoneNumber: {
     type: String,
