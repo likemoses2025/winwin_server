@@ -27,7 +27,7 @@ export const login = asyncError(async (req, res, next) => {
   if (!isMatched) {
     return next(new ErrorHandler("Incorrect Password or Email !!", 400));
   }
-  sendToken(user, res, `Welcome Back ${user.name}`, 200);
+  sendToken(user, res, `Welcome Back ${user.userName}`, 200);
 });
 
 export const signup = asyncError(async (req, res, next) => {
@@ -246,7 +246,8 @@ export const resetPassword = asyncError(async (req, res, next) => {
 
 export const addPlace = asyncError(async (req, res, next) => {
   const place = req.body;
-  console.log(req.body);
+  console.log("배송장소", req.body);
+  console.log("req.user", req.user);
   const user = await User.findById(req.user._id);
 
   if (!user)
@@ -261,12 +262,24 @@ export const addPlace = asyncError(async (req, res, next) => {
 });
 
 export const deletePlace = asyncError(async (req, res, next) => {
-  const { id } = req.params;
-  console.log(id);
-
   const user = await User.findById(req.user._id);
-  console.log(user.deliveryPlace);
-  // await user.deleteOne({ _id: id })
 
-  res.status(200).json({ success: true, user });
+  if (!user) return next(new ErrorHandler("유저를 찾을 수 없습니다.!!", 404));
+
+  const id = req.params.id;
+
+  if (!id) return next(new ErrorHandler("배송장소를 찾을 수 없습니다.!!", 404));
+
+  let isExist = -1;
+  user.deliveryPlace.forEach((item, index) => {
+    if (item._id.toString() === id.toString()) isExist = index;
+  });
+
+  user.deliveryPlace.splice(isExist, 1);
+
+  await user.save();
+
+  res
+    .status(200)
+    .json({ success: true, message: "배송장소 삭제를 성공했습니다.!!" });
 });
