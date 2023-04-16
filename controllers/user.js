@@ -275,6 +275,9 @@ export const deletePlace = asyncError(async (req, res, next) => {
     if (item._id.toString() === id.toString()) isExist = index;
   });
 
+  if (isExist === -1)
+    return next(new ErrorHandler("배송장소를 찾을 수 없습니다!!"), 404);
+
   user.deliveryPlace.splice(isExist, 1);
 
   await user.save();

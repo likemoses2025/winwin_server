@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 // 유저 모델에 오더 ObjectId 삽입
 
 const schema = new mongoose.Schema({
+  team: { type: String, required: true },
   deliveryDate: Date,
   deliveryPlace: {
     type: mongoose.Schema.Types.ObjectId,
