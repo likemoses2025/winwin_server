@@ -4,6 +4,7 @@ import {
   deleteMyOrder,
   getMyOrder,
   getTeamOrder,
+  updateMyOrder,
 } from "../controllers/order.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
@@ -15,5 +16,6 @@ router
   .get("/teamOrder", isAuthenticated, getTeamOrder);
 
 router.delete("/deleteMyOrder", isAuthenticated, deleteMyOrder);
+router.put("/updateOrder/:id", isAuthenticated, updateMyOrder);
 
 export default router;

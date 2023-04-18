@@ -5,8 +5,6 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "macdev": "export NODE_ENV=Development&& nodemon server.js",
-    "macstart": "export NODE_ENV=Production&& node server.js",
     "dev": "cross-env NODE_ENV=Development nodemon server.js",
     "start": "cross-env NODE_ENV=Production node server.js"
   },

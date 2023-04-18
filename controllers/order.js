@@ -73,3 +73,26 @@ export const deleteMyOrder = asyncError(async (req, res, next) => {
     .status(200)
     .json({ success: true, message: "주문 삭제를 성공했습니다.!!" });
 });
+
+export const updateMyOrder = asyncError(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order.user.toString() !== req.user._id.toString())
+    return next(new ErrorHandler("생성자가 일치하지 않습니다."), 403);
+
+  if (!order) return next(new ErrorHandler("주문를 찾을 수 없습니다.!!", 404));
+
+  const { deliveryDate, deliveryPlace, orderItems, totalBox, totalSum } = order;
+
+  if (deliveryDate) orderItems.deliveryDate = deliveryDate;
+  if (deliveryPlace) orderItems.deliveryPlace = deliveryPlace;
+  if (orderItems) orderItems.orderItems = orderItems;
+  if (totalBox) orderItems.totalBox = totalBox;
+  if (totalSum) orderItems.totalSum = totalSum;
+
+  await order.save();
+
+  res
+    .status(200)
+    .json({ success: true, message: "주문 수정을 성공했습니다.!!" });
+});
