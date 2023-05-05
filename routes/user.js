@@ -28,7 +28,7 @@ router.get("/me", isAuthenticated, getMyProfile);
 router.get("/logout", isAuthenticated, logOut);
 
 // Update Routes
-router.put("/updateProfile", isAuthenticated, updateProfile);
+router.put("/updateprofile", isAuthenticated, updateProfile);
 router.put("/changepassword", isAuthenticated, changePassword);
 router.put("/updatepic", isAuthenticated, singleUpload, updatePic);
 
