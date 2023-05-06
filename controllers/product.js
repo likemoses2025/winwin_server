@@ -9,10 +9,21 @@ import {
 } from "../utils/features.js";
 import cloudinary from "cloudinary";
 
-export const getAllProduct = asyncError(async (req, res, next) => {
-  const products = await Product.find({});
+export const getAllProducts = asyncError(async (req, res, next) => {
+  const { keyword, category } = req.query;
 
-  res.status(200).json({ success: true, products });
+  const products = await Product.find({
+    name: {
+      $regex: keyword ? keyword : "",
+      $options: "i",
+    },
+    category: category ? category : undefined,
+  });
+
+  res.status(200).json({
+    success: true,
+    products,
+  });
 });
 
 export const getProductDetails = asyncError(async (req, res, next) => {
@@ -142,4 +153,42 @@ export const getAdminProduct = asyncError(async (req, res, next) => {
   const products = await Product.find({});
 
   res.status(200).json({ success: true, products });
+});
+
+export const addCategory = asyncError(async (req, res, next) => {
+  await Category.create(req.body);
+
+  res.status(201).json({
+    success: true,
+    message: "Category Added Successfully",
+  });
+});
+
+// Category
+export const getAllCategories = asyncError(async (req, res, next) => {
+  const categories = await Category.find({});
+
+  res.status(200).json({
+    success: true,
+    categories,
+  });
+});
+
+export const deleteCategory = asyncError(async (req, res, next) => {
+  const category = await Category.findById(req.params.id);
+  if (!category) return next(new ErrorHandler("Category Not Found", 404));
+  const products = await Product.find({ category: category._id });
+
+  for (let i = 0; i < products.length; i++) {
+    const product = products[i];
+    product.category = undefined;
+    await product.save();
+  }
+
+  await category.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "Category Deleted Successfully",
+  });
 });

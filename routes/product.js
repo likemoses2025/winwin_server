@@ -34,4 +34,8 @@ router
   .post(isAuthenticated, isAdmin, singleUpload, addProductImage)
   .delete(isAuthenticated, isAdmin, deleteProductImage);
 
+router.post("/category", isAuthenticated, isAdmin, addCategory);
+router.get("/categories", getAllCategories);
+router.delete("/category/:id", isAuthenticated, isAdmin, deleteCategory);
+
 export default router;
