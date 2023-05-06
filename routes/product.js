@@ -1,11 +1,14 @@
 import express from "express";
 import {
+  addCategory,
   addProductImage,
   createProduct,
+  deleteCategory,
   deleteProduct,
   deleteProductImage,
   getAdminProduct,
-  getAllProduct,
+  getAllCategories,
+  getAllProducts,
   getProductDetails,
   updateProduct,
 } from "../controllers/product.js";
@@ -16,7 +19,7 @@ import { singleUpload } from "../middlewares/multer.js";
 const router = express.Router();
 
 // Auth Routes
-router.route("/all").get(getAllProduct);
+router.route("/all").get(getAllProducts);
 router.get("/admin", isAuthenticated, isAdmin, getAdminProduct);
 
 router
