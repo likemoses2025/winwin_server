@@ -1,13 +1,9 @@
+import cloudinary from "cloudinary";
 import { asyncError } from "../middlewares/error.js";
+import { Category } from "../models/category.js";
 import { Product } from "../models/product.js";
 import ErrorHandler from "../utils/error.js";
-import {
-  cookieOptions,
-  getDataUri,
-  sendEmail,
-  sendToken,
-} from "../utils/features.js";
-import cloudinary from "cloudinary";
+import { getDataUri } from "../utils/features.js";
 
 export const getAllProducts = asyncError(async (req, res, next) => {
   const { keyword, category } = req.query;
@@ -26,13 +22,24 @@ export const getAllProducts = asyncError(async (req, res, next) => {
   });
 });
 
+export const getNewProducts = asyncError(async (req, res, next) => {
+  const products = await Product.find({
+    newproduct: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
 export const getProductDetails = asyncError(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   res.status(200).json({ success: true, product });
 });
 
 export const createProduct = asyncError(async (req, res, next) => {
-  const { no, category, name, code, price } = req.body;
+  const { no, name, code, price, newproduct, category } = req.body;
 
   if (req.file) {
     const file = getDataUri(req.file);
@@ -41,19 +48,21 @@ export const createProduct = asyncError(async (req, res, next) => {
 
     await Product.create({
       no,
-      category,
       name,
       code,
       price,
+      newproduct,
+      category,
       images: [image],
     });
   } else {
     await Product.create({
       no,
-      category,
       name,
       code,
       price,
+      newproduct,
+      category,
     });
   }
 

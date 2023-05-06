@@ -9,6 +9,7 @@ import {
   getAdminProduct,
   getAllCategories,
   getAllProducts,
+  getNewProducts,
   getProductDetails,
   updateProduct,
 } from "../controllers/product.js";
@@ -21,6 +22,7 @@ const router = express.Router();
 // Auth Routes
 router.route("/all").get(getAllProducts);
 router.get("/admin", isAuthenticated, isAdmin, getAdminProduct);
+router.get("/newproduct", getNewProducts);
 
 router
   .route("/single/:id")

@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-  // NewProduct : 1~100
-  // Noodle : 101~200
-  // CupNoodle : 201~300
-  // Snack : 301~400
-  // Sauce no : 401~500
-  // etc no : 501~600
+  // 봉지면 : 1~100
+  // 용기면 : 101~200
+  // 스낵류 : 201~300
+  // 소스류 : 301~400
+  // 건기식 : 401~500
+  // 기타 : 501~600
 
   no: {
     type: Number,
@@ -23,7 +23,16 @@ const schema = new mongoose.Schema({
   orderValue: { type: Number },
   sum: { type: Number },
   images: [{ public_id: String, url: String }],
-  category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+  category: {
+    type: String,
+    enum: ["봉지면", "용기면", "스낵류", "소스류", "건기식", "기타"],
+    default: "봉지면",
+    required: [true, "카테고리를 입력해 주세요"],
+  },
+  newproduct: {
+    type: Boolean,
+    default: false,
+  },
   createAt: { type: Date, default: Date.now },
 });
 
