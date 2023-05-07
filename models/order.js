@@ -10,7 +10,6 @@ const schema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-
   orderItems: [
     {
       name: {
@@ -29,26 +28,15 @@ const schema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      sum: {
-        type: Number,
-        required: true,
-      },
     },
   ],
-
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-
   totalBox: { type: Number, required: true },
-
-  totalSum: {
-    type: Number,
-    required: true,
-  },
-
+  totalSum: { type: Number, required: true },
   createdAt: {
     type: Date,
     default: Date.now,
