@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-  // 봉지면 : 1~100
+  // 신제품 : 1~10
+  // 봉지면 : 11~100
   // 용기면 : 101~200
   // 스낵류 : 201~300
   // 소스류 : 301~400
@@ -20,12 +21,11 @@ const schema = new mongoose.Schema({
     unique: [true, "코드가 존재합니다. 코드를 확인해 주세요!!"],
   },
   price: { type: Number, required: [true, "가격을 입력해 주세요!!"] },
-  orderValue: { type: Number },
-  sum: { type: Number },
   images: [{ public_id: String, url: String }],
+  barcode: [{ public_id: String, url: String }],
   category: {
     type: String,
-    enum: ["봉지면", "용기면", "스낵류", "소스류", "건기식", "기타"],
+    enum: ["A00", "B00", "C00", "K00", "U00", "I00"],
     default: "봉지면",
     required: [true, "카테고리를 입력해 주세요"],
   },
