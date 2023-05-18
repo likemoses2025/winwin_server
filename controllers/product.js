@@ -78,7 +78,7 @@ export const updateProduct = asyncError(async (req, res, next) => {
   if (!product)
     return next(new ErrorHandler("제품을 찾을 수 없습니다.!!", 404));
 
-  if (no) product.name = no;
+  if (no) product.no = no;
   if (category) product.category = category;
   if (name) product.name = name;
   if (code) product.code = code;
