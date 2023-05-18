@@ -164,6 +164,13 @@ export const getAdminProduct = asyncError(async (req, res, next) => {
   res.status(200).json({ success: true, products });
 });
 
+export const getOrderProducts = asyncError(async (req, res, next) => {
+  // Search & Category query
+  const products = await Product.find({});
+
+  res.status(200).json({ success: true, products });
+});
+
 export const addCategory = asyncError(async (req, res, next) => {
   await Category.create(req.body);
 

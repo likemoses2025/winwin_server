@@ -10,6 +10,7 @@ import {
   getAllCategories,
   getAllProducts,
   getNewProducts,
+  getOrderProducts,
   getProductDetails,
   updateProduct,
 } from "../controllers/product.js";
@@ -22,6 +23,7 @@ const router = express.Router();
 // Auth Routes
 router.route("/all").get(getAllProducts);
 router.get("/admin", isAuthenticated, isAdmin, getAdminProduct);
+router.get("/order", isAuthenticated, getOrderProducts);
 router.get("/newproduct", getNewProducts);
 
 router
