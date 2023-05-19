@@ -166,7 +166,7 @@ export const getAdminProduct = asyncError(async (req, res, next) => {
 
 export const getOrderProducts = asyncError(async (req, res, next) => {
   // Search & Category query
-  const products = await Product.find({});
+  const products = await Product.find({}, { no, code, name, price });
 
   res.status(200).json({ success: true, products });
 });
