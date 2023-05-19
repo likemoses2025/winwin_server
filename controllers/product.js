@@ -166,10 +166,7 @@ export const getAdminProduct = asyncError(async (req, res, next) => {
 
 export const getOrderProducts = asyncError(async (req, res, next) => {
   // Search & Category query
-  const products = await Product.find(
-    {},
-    { no: 1, code: 1, name: 1, price: 1 }
-  );
+  const products = await Product.find({}).select("no code name price");
   res.status(200).json({ success: true, products });
 });
 
