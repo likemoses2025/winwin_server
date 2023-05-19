@@ -169,7 +169,7 @@ export const getOrderProducts = asyncError(async (req, res, next) => {
   const products = await Product.find(
     {},
     { no: 1, code: 1, name: 1, price: 1 }
-  ).pretty();
+  );
   res.status(200).json({ success: true, products });
 });
 
