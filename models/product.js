@@ -25,7 +25,7 @@ const schema = new mongoose.Schema({
   barcode: [{ public_id: String, url: String }],
   category: {
     type: String,
-    enum: ["봉지면", "용기면", "스낵류", "소스류", "건기식", "기타"],
+    enum: ["봉지면", "용기면", "스낵류", "소스류", "즉석식품", "기타"],
     required: [true, "카테고리를 입력해 주세요"],
   },
   newproduct: {
