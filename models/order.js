@@ -16,30 +16,10 @@ const schema = new mongoose.Schema({
   //   required: true,
   // },
 
-  orderItems: [
-    {
-      no: {
-        type: Number,
-        required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
-      code: {
-        type: String,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
+  orderItems: {
+    type: String,
+    required: true,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
