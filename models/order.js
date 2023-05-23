@@ -19,7 +19,7 @@ const schema = new mongoose.Schema({
   orderItems: [
     {
       no: {
-        type: String,
+        type: Number,
         required: true,
       },
       name: {
