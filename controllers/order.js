@@ -1,12 +1,17 @@
 import { asyncError } from "../middlewares/error.js";
 import { Order } from "../models/order.js";
-import { Product } from "../models/product.js";
 import { User } from "../models/user.js";
 import ErrorHandler from "../utils/error.js";
 
 export const createOrder = asyncError(async (req, res, next) => {
-  const { team, deliveryDate, deliveryPlace, orderItems, totalBox, totalSum } =
-    req.body;
+  const {
+    team,
+    deliveryDate,
+    deliveryPlace,
+    orderItems,
+    totalBox,
+    totalAmount,
+  } = req.body;
 
   const order = await Order.create({
     team,
@@ -15,7 +20,7 @@ export const createOrder = asyncError(async (req, res, next) => {
     deliveryPlace,
     orderItems,
     totalBox,
-    totalSum,
+    totalAmount,
   });
 
   res.status(201).json({
