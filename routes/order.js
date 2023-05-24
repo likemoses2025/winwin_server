@@ -3,7 +3,7 @@ import {
   createOrder,
   deleteMyOrder,
   getTeamOrder,
-  getUserOrder,
+  getDealerOrder,
   updateMyOrder,
 } from "../controllers/order.js";
 import { isAuthenticated } from "../middlewares/auth.js";
@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.post("/new", isAuthenticated, createOrder);
 router
-  .get("/userOrder", isAuthenticated, getUserOrder)
-  .get("/teamOrder", isAuthenticated, getTeamOrder);
+  .get("/dealer", isAuthenticated, getDealerOrder)
+  .get("/manager", isAuthenticated, getTeamOrder);
 
 router.delete("/deleteMyOrder", isAuthenticated, deleteMyOrder);
 router.put("/updateOrder/:id", isAuthenticated, updateMyOrder);
