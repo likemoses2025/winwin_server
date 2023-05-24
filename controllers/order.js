@@ -34,12 +34,12 @@ export const getUserOrder = asyncError(async (req, res, next) => {
   if (!req.user._id)
     return next(new ErrorHandler("유저를 찾을 수 없습니다.!!"), 404);
 
-  const order = await Order.find({ user: req.user._id }).populate({
+  const userOrders = await Order.find({ user: req.user._id }).populate({
     path: "user",
     select: "storeName userName team",
   });
 
-  res.status(200).json({ success: true, order });
+  res.status(200).json({ success: true, userOrders });
 });
 
 export const getTeamOrder = asyncError(async (req, res, next) => {
