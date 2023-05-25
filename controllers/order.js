@@ -30,7 +30,7 @@ export const createOrder = asyncError(async (req, res, next) => {
   });
 });
 
-export const getDealerOrder = asyncError(async (req, res, next) => {
+export const getMyOrder = asyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   if (!user) return next(new ErrorHandler("유저를 찾을 수 없습니다.!!"), 404);
 
