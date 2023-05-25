@@ -36,6 +36,8 @@ export const getDealerOrder = asyncError(async (req, res, next) => {
 
   const dealerOrders = await Order.find({ user: req.user._id });
 
+  console.log(dealerOrders);
+
   res.status(200).json({ success: true, dealerOrders });
 });
 
