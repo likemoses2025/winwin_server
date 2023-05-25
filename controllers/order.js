@@ -31,7 +31,11 @@ export const createOrder = asyncError(async (req, res, next) => {
 });
 
 export const getMyOrders = asyncError(async (req, res, next) => {
-  const orders = await Order.find({ user: req.user._id });
+  const orders = await Order.find({ user: req.user._id })
+    .sort({
+      deliveryDate: -1,
+    })
+    .populate({ path: "user", select: "storeName" });
 
   res.status(200).json({
     success: true,
