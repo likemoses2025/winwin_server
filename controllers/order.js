@@ -30,15 +30,13 @@ export const createOrder = asyncError(async (req, res, next) => {
   });
 });
 
-export const getMyOrder = asyncError(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
-  if (!user) return next(new ErrorHandler("유저를 찾을 수 없습니다.!!"), 404);
+export const getMyOrders = asyncError(async (req, res, next) => {
+  const orders = await Order.find({ user: req.user._id });
 
-  const dealerOrders = await Order.find({ user: req.user._id });
-
-  console.log(dealerOrders);
-
-  res.status(200).json({ success: true, dealerOrders });
+  res.status(200).json({
+    success: true,
+    orders,
+  });
 });
 
 export const getTeamOrder = asyncError(async (req, res, next) => {
