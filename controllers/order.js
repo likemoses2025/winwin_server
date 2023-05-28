@@ -81,8 +81,6 @@ export const deleteMyOrder = asyncError(async (req, res, next) => {
 });
 
 export const updateMyOrder = asyncError(async (req, res, next) => {
-  console.log("req.body", req.body);
-
   const {
     team,
     deliveryPlace,
