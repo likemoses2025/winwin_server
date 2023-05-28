@@ -15,7 +15,7 @@ router
   .get("/my", isAuthenticated, getMyOrders)
   .get("/team", isAuthenticated, getTeamOrder);
 
-router.delete("/deleteMyOrder", isAuthenticated, deleteMyOrder);
+router.delete("/delete/:id", isAuthenticated, deleteMyOrder);
 router.put("/update/:id", isAuthenticated, updateMyOrder);
 
 export default router;

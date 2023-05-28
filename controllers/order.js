@@ -64,7 +64,7 @@ export const getTeamOrder = asyncError(async (req, res, next) => {
 });
 
 export const deleteMyOrder = asyncError(async (req, res, next) => {
-  const order = await Order.findById(req.body.id);
+  const order = await Order.findById(req.params.id);
 
   if (!order) return next(new ErrorHandler("주문를 찾을 수 없습니다.!!", 404));
   // console.log("order.user", order.user);
