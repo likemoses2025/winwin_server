@@ -81,6 +81,9 @@ export const deleteMyOrder = asyncError(async (req, res, next) => {
 });
 
 export const updateMyOrder = asyncError(async (req, res, next) => {
+  const { deliveryPlace, deliveryDate, orderItems, totalBox, totalAmount } =
+    req.body;
+
   const order = await Order.findById(req.params.id);
 
   if (order.user.toString() !== req.user._id.toString())
@@ -88,13 +91,11 @@ export const updateMyOrder = asyncError(async (req, res, next) => {
 
   if (!order) return next(new ErrorHandler("주문를 찾을 수 없습니다.!!", 404));
 
-  const { deliveryDate, deliveryPlace, orderItems, totalBox, totalSum } = order;
-
-  if (deliveryDate) orderItems.deliveryDate = deliveryDate;
-  if (deliveryPlace) orderItems.deliveryPlace = deliveryPlace;
-  if (orderItems) orderItems.orderItems = orderItems;
-  if (totalBox) orderItems.totalBox = totalBox;
-  if (totalSum) orderItems.totalSum = totalSum;
+  if (deliveryDate) order.deliveryDate = deliveryDate;
+  if (deliveryPlace) order.deliveryPlace = deliveryPlace;
+  if (totalBox) order.totalBox = totalBox;
+  if (orderItems) order.orderItems = orderItems;
+  if (totalAmount) order.totalAmount = totalAmount;
 
   await order.save();
 
