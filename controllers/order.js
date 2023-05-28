@@ -81,8 +81,16 @@ export const deleteMyOrder = asyncError(async (req, res, next) => {
 });
 
 export const updateMyOrder = asyncError(async (req, res, next) => {
-  const { deliveryPlace, deliveryDate, orderItems, totalBox, totalAmount } =
-    req.body;
+  console.log("req.body", req.body);
+
+  const {
+    team,
+    deliveryPlace,
+    deliveryDate,
+    orderItems,
+    totalBox,
+    totalAmount,
+  } = req.body;
 
   const order = await Order.findById(req.params.id);
 
@@ -91,6 +99,7 @@ export const updateMyOrder = asyncError(async (req, res, next) => {
 
   if (!order) return next(new ErrorHandler("주문를 찾을 수 없습니다.!!", 404));
 
+  if (team) order.team = team;
   if (deliveryDate) order.deliveryDate = deliveryDate;
   if (deliveryPlace) order.deliveryPlace = deliveryPlace;
   if (totalBox) order.totalBox = totalBox;
