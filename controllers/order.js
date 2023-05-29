@@ -67,9 +67,7 @@ export const deleteMyOrder = asyncError(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
   if (!order) return next(new ErrorHandler("주문를 찾을 수 없습니다.!!", 404));
-  // console.log("order.user", order.user);
-  // console.log("req.user._id", req.user._id);
-  if (order.user !== req.user)
+  if (order.user.toString() !== req.user._id.toString())
     return next(new ErrorHandler("유저가 일치하지 않습니다.!!"), 403);
 
   await order.deleteOne();
