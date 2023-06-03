@@ -4,10 +4,9 @@ import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
   team: { type: String, required: true },
-  deliveryDate: Date,
   // 2301,2302,2303,2304
   reFundDate: { type: String, required: true },
-  refundItems: {
+  reFundItems: {
     type: String,
     required: true,
   },
