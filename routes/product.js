@@ -12,6 +12,7 @@ import {
   getNewProducts,
   getOrderProducts,
   getProductDetails,
+  getRefundProducts,
   updateProduct,
 } from "../controllers/product.js";
 
@@ -20,10 +21,10 @@ import { singleUpload } from "../middlewares/multer.js";
 
 const router = express.Router();
 
-// Auth Routes
 router.route("/all").get(getAllProducts);
 router.get("/admin", isAuthenticated, isAdmin, getAdminProduct);
 router.get("/order", isAuthenticated, getOrderProducts);
+router.get("/refund", isAuthenticated, getRefundProducts);
 router.get("/newproduct", getNewProducts);
 
 router

@@ -2,6 +2,7 @@ import cloudinary from "cloudinary";
 import { asyncError } from "../middlewares/error.js";
 import { Category } from "../models/category.js";
 import { Product } from "../models/product.js";
+import { Refund } from "../models/refund.js";
 import ErrorHandler from "../utils/error.js";
 import { getDataUri } from "../utils/features.js";
 
@@ -165,8 +166,12 @@ export const getAdminProduct = asyncError(async (req, res, next) => {
 });
 
 export const getOrderProducts = asyncError(async (req, res, next) => {
-  // Search & Category query
   const products = await Product.find({}).select("no code name price");
+  res.status(200).json({ success: true, products });
+});
+
+export const getRefundProducts = asyncError(async (req, res, next) => {
+  const products = await Refund.find({}).select("no code name price");
   res.status(200).json({ success: true, products });
 });
 
