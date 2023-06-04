@@ -6,16 +6,6 @@ import jwt from "jsonwebtoken";
 const schema = new mongoose.Schema({
   team: {
     type: String,
-    enum: [
-      "경북팀",
-      "경남팀",
-      "동부팀",
-      "서부팀",
-      "강원팀",
-      "충청팀",
-      "호남팀",
-      "온라인팀",
-    ],
     default: "경북팀",
     required: [true, "팀명을 입력해 주세요"],
   },

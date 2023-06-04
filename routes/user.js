@@ -33,7 +33,7 @@ router.put("/changepassword", isAuthenticated, changePassword);
 router.put("/updatepic", isAuthenticated, singleUpload, updatePic);
 
 // Delivery Place
-router.put("/addPlace", isAuthenticated, addPlace);
+router.post("/addplace", isAuthenticated, addPlace);
 router.delete("/deletePlace/:id", isAuthenticated, deletePlace);
 
 // Forget Password & Reset Password
