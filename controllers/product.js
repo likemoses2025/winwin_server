@@ -5,6 +5,7 @@ import { Product } from "../models/product.js";
 import { Refund } from "../models/refund.js";
 import ErrorHandler from "../utils/error.js";
 import { getDataUri } from "../utils/features.js";
+import { ExpiredProduct } from "../models/expiredproduct.js";
 
 export const getAllProducts = asyncError(async (req, res, next) => {
   const { keyword, category } = req.query;
@@ -171,8 +172,10 @@ export const getOrderProducts = asyncError(async (req, res, next) => {
 });
 
 export const getRefundProducts = asyncError(async (req, res, next) => {
-  const products = await Refund.find({}).select("no code name price");
-  res.status(200).json({ success: true, products });
+  const expiredproducts = await ExpiredProduct.find({}).select(
+    "no code name price"
+  );
+  res.status(200).json({ success: true, expiredproducts });
 });
 
 export const addCategory = asyncError(async (req, res, next) => {
