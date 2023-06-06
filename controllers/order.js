@@ -11,6 +11,7 @@ export const createOrder = asyncError(async (req, res, next) => {
     orderItems,
     totalBox,
     totalAmount,
+    createdAt,
   } = req.body;
 
   const order = await Order.create({
@@ -21,6 +22,7 @@ export const createOrder = asyncError(async (req, res, next) => {
     orderItems,
     totalBox,
     totalAmount,
+    createdAt,
   });
 
   res.status(201).json({
@@ -85,6 +87,7 @@ export const updateMyOrder = asyncError(async (req, res, next) => {
     orderItems,
     totalBox,
     totalAmount,
+    createdAt,
   } = req.body;
 
   const order = await Order.findById(req.params.id);
@@ -100,6 +103,7 @@ export const updateMyOrder = asyncError(async (req, res, next) => {
   if (totalBox) order.totalBox = totalBox;
   if (orderItems) order.orderItems = orderItems;
   if (totalAmount) order.totalAmount = totalAmount;
+  if (createdAt) order.createdAt = createdAt;
 
   await order.save();
 
