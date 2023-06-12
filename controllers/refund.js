@@ -4,15 +4,15 @@ import { User } from "../models/user.js";
 import ErrorHandler from "../utils/error.js";
 
 export const createRefund = asyncError(async (req, res, next) => {
-  const { team, reFundDate, reFundItems, totalValue, totalAmount } = req.body;
+  const { team, refundDate, refundItems, totalValue, totalAmount } = req.body;
 
   const refund = await Refund.create({
     team,
-    user: req.user._id,
-    reFundDate,
-    reFundItems,
+    refundDate,
+    refundItems,
     totalValue,
     totalAmount,
+    user: req.user._id,
   });
 
   res.status(201).json({
@@ -41,10 +41,6 @@ export const getMyRefund = asyncError(async (req, res, next) => {
 export const getTeamRefund = asyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   const { searchDate } = req.body;
-  console.log("user.team" + user.team);
-
-  console.log("searchDate: " + searchDate);
-  console.log("type of: " + typeof searchDate);
   if (!user) return next(new ErrorHandler("사용자를 찾을 수 없습니다."), 404);
 
   if (user.role === "dealer")
@@ -81,7 +77,7 @@ export const deleteMyRefund = asyncError(async (req, res, next) => {
 });
 
 export const updateMyRefund = asyncError(async (req, res, next) => {
-  const { reFundDate, reFundItems, totalValue, totalAmount } = req.body;
+  const { refundDate, refundItems, totalValue, totalAmount } = req.body;
 
   const refund = await Refund.findById(req.params.id);
 
@@ -90,8 +86,8 @@ export const updateMyRefund = asyncError(async (req, res, next) => {
 
   if (!refund) return next(new ErrorHandler("반품을 찾을 수 없습니다.!!", 404));
 
-  if (reFundDate) refund.reFundDate = reFundDate;
-  if (reFundItems) refund.reFundItems = reFundItems;
+  if (refundDate) refund.refundDate = refundDate;
+  if (refundItems) refund.refundItems = refundItems;
   if (totalValue) refund.totalValue = totalValue;
   if (totalAmount) refund.totalAmount = totalAmount;
 
