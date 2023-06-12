@@ -37,7 +37,7 @@ export const signup = asyncError(async (req, res, next) => {
     email,
     password,
     userName,
-    sapCode,
+    storeCode,
     storeName,
     storeAddress,
     phoneNumber,
@@ -67,7 +67,7 @@ export const signup = asyncError(async (req, res, next) => {
     email,
     password,
     userName,
-    sapCode,
+    storeCode,
     storeName,
     storeAddress,
     phoneNumber,
@@ -107,7 +107,7 @@ export const updateProfile = asyncError(async (req, res, next) => {
     channel,
     email,
     userName,
-    sapCode,
+    storeCode,
     storeName,
     storeAddress,
     phoneNumber,
@@ -117,8 +117,8 @@ export const updateProfile = asyncError(async (req, res, next) => {
   if (channel) user.channel = channel;
   if (email) user.email = email;
   if (userName) user.userName = userName;
-  if (sapCode) user.sapCode = sapCode;
   if (storeName) user.storeName = storeName;
+  if (storeCode) user.storeCode = storeCode;
   if (storeAddress) user.storeAddress = storeAddress;
   if (phoneNumber) user.phoneNumber = phoneNumber;
 
@@ -246,8 +246,6 @@ export const resetPassword = asyncError(async (req, res, next) => {
 
 export const addPlace = asyncError(async (req, res, next) => {
   const place = req.body;
-  console.log("배송장소", req.body);
-  console.log("req.user", req.user);
   const user = await User.findById(req.user._id);
 
   if (!user)

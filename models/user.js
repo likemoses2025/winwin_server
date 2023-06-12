@@ -33,9 +33,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: [true, "점주님의 이름을 입력해 주세요!!"],
   },
-  sapCode: {
+  storeCode: {
     type: String,
-    unique: [true, "코드가 존재합니다. SapCode를 확인해 주세요!!"],
+    required: [true, "점포명을 입력해 주세요!!"],
+    unique: [true, "점포코드가 존재합니다. 다른 점포코드를 입력해 주세요!!"],
   },
   storeName: {
     type: String,

@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 const schema = new mongoose.Schema(
   {
     team: { type: String, required: true },
+    storeCode: { type: String, required: true },
     // 2301,2302,2303,2304
     reFundDate: { type: String, required: true },
     reFundItems: {
