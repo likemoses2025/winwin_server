@@ -7,7 +7,7 @@ export const createRefund = asyncError(async (req, res, next) => {
   const { team, refundDate, refundItems, totalValue, totalAmount } = req.body;
 
   const refund = await Refund.create({
-    team,
+    team: req.user.team,
     storeCode: req.user.storeCode,
     refundDate,
     refundItems,
