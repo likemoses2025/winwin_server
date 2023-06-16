@@ -4,12 +4,14 @@ import { User } from "../models/user.js";
 import ErrorHandler from "../utils/error.js";
 
 export const createRefund = asyncError(async (req, res, next) => {
-  const { refundDate, refundItems, totalValue, totalAmount } = req.body;
+  const { gunnySackNumber, refundDate, refundItems, totalValue, totalAmount } =
+    req.body;
 
   const refund = await Refund.create({
     team: req.user.team,
     storeName: req.user.storeName,
     storeCode: req.user.storeCode,
+    gunnySackNumber: gunnySackNumber,
     refundDate,
     refundItems,
     totalValue,
