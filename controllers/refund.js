@@ -4,10 +4,11 @@ import { User } from "../models/user.js";
 import ErrorHandler from "../utils/error.js";
 
 export const createRefund = asyncError(async (req, res, next) => {
-  const { team, refundDate, refundItems, totalValue, totalAmount } = req.body;
+  const { refundDate, refundItems, totalValue, totalAmount } = req.body;
 
   const refund = await Refund.create({
     team: req.user.team,
+    storeName: req.user.storeName,
     storeCode: req.user.storeCode,
     refundDate,
     refundItems,
@@ -19,7 +20,6 @@ export const createRefund = asyncError(async (req, res, next) => {
   res.status(201).json({
     success: true,
     message: "반품등록을 성공했습니다!!",
-    refund,
   });
 });
 
