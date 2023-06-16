@@ -8,6 +8,7 @@ export const createRefund = asyncError(async (req, res, next) => {
 
   const refund = await Refund.create({
     team,
+    storeCode: req.user.storeCode,
     refundDate,
     refundItems,
     totalValue,
@@ -17,7 +18,7 @@ export const createRefund = asyncError(async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    message: "ReFund is created successfully",
+    message: "반품등록을 성공했습니다!!",
     refund,
   });
 });
