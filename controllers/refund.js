@@ -90,7 +90,7 @@ export const updateMyRefund = asyncError(async (req, res, next) => {
 
   if (!refund) return next(new ErrorHandler("반품을 찾을 수 없습니다.!!", 404));
 
-  if (gunnySackNumber) refund.refundDate = gunnySackNumber;
+  if (gunnySackNumber) refund.gunnySackNumber = gunnySackNumber;
   if (refundDate) refund.refundDate = refundDate;
   if (refundItems) refund.refundItems = refundItems;
   if (totalValue) refund.totalValue = totalValue;
