@@ -80,7 +80,8 @@ export const deleteMyRefund = asyncError(async (req, res, next) => {
 });
 
 export const updateMyRefund = asyncError(async (req, res, next) => {
-  const { refundDate, refundItems, totalValue, totalAmount } = req.body;
+  const { gunnySackNumber, refundDate, refundItems, totalValue, totalAmount } =
+    req.body;
 
   const refund = await Refund.findById(req.params.id);
 
@@ -89,6 +90,7 @@ export const updateMyRefund = asyncError(async (req, res, next) => {
 
   if (!refund) return next(new ErrorHandler("반품을 찾을 수 없습니다.!!", 404));
 
+  if (gunnySackNumber) refund.refundDate = gunnySackNumber;
   if (refundDate) refund.refundDate = refundDate;
   if (refundItems) refund.refundItems = refundItems;
   if (totalValue) refund.totalValue = totalValue;
